@@ -28,9 +28,9 @@ public class Carrot : MonoBehaviour
     private void CarrotClickedCallback()
     {
         print("hello");
-        carrotRendererTransform.localScale = Vector3.one * 0.8f;
+        carrotRendererTransform.localScale = Vector3.one * .8f;
         LeanTween.cancel(carrotRendererTransform.gameObject);
-        LeanTween.scale(carrotRendererTransform.gameObject, Vector3.one * 0.7f, 0.15f).setLoopPingPong(1);
+        LeanTween.scale(carrotRendererTransform.gameObject, Vector3.one * .7f, .15f).setLoopPingPong(1);
        
        
     }
