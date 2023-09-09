@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +12,7 @@ public class Carrot : MonoBehaviour
     [Header("Setting")]
     [SerializeField] private Image fillImage;
     [SerializeField] private float fillRate;
+    private bool isFrenzyModeActive;
     private void Awake()
     {
         InputManager.onCarrotClicked += CarrotClickedCallback;
@@ -20,30 +21,22 @@ public class Carrot : MonoBehaviour
     {
         InputManager.onCarrotClicked -= CarrotClickedCallback;
     }
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private void CarrotClickedCallback()
     {
         Animate();
-        Fill();
-       
-       
-       
+        if (!isFrenzyModeActive)
+            Fill();
+
+
     }
     private void Animate()
     {
-        carrotRendererTransform.localScale = Vector3.one * .8f;
+        carrotRendererTransform.localScale = Vector3.one * 0.8f;
         LeanTween.cancel(carrotRendererTransform.gameObject);
         LeanTween.scale(carrotRendererTransform.gameObject, Vector3.one * .7f, .15f).setLoopPingPong(1);
     }
+
     private void Fill()
     {
         fillImage.fillAmount += fillRate;
@@ -52,7 +45,15 @@ public class Carrot : MonoBehaviour
     }
     private void StartFenzyMode()
     {
-        LeanTween.value(1, 0, 5).setOnUpdate((value) => fillImage.fillAmount = value);
+        isFrenzyModeActive = true;
+        LeanTween.value(1, 0, 5).setOnUpdate((value) => fillImage.fillAmount = value)
+            .setOnComplete(StopFenzyMode);
     }
+    private void StopFenzyMode()
+    {
+        isFrenzyModeActive = false;
+    }
+
+
 }
 

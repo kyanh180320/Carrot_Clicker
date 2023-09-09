@@ -24,7 +24,7 @@ public class InputManager : MonoBehaviour
     private void ThrowCast()
     {
         RaycastHit2D hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
-        if (hit == null)
+        if (hit.collider == null)
             return;
         onCarrotClicked?.Invoke();
         onCarrotClickedPosition?.Invoke(hit.point);
